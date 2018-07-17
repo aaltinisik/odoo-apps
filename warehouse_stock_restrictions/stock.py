@@ -26,7 +26,7 @@ class stock_move(models.Model):
     @api.one
     @api.constrains('state', 'location_id', 'location_dest_id')
     def check_user_location_rights(self):
-        if self.state == 'draft':
+        if self.state in ['draft','waiting','assigned','confirmed']:
             return True
         user_locations = self.env.user.stock_location_ids
         if self.env.user.restrict_locations:
