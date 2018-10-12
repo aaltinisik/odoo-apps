@@ -20,6 +20,14 @@ class ResUsers(models.Model):
         'user_id', 'picking_type_id', string='Default Warehouse Operations')
 
 
+class picking_type(models.Model):
+    _inherit = 'stock.picking.type'
+
+    allowed_user_ids = fields.Many2many(
+        'res.users', 'stock_picking_type_users_rel',
+        'picking_type_id', 'user_id',  string='Allowed Users')
+
+
 class stock_move(models.Model):
     _inherit = 'stock.move'
 

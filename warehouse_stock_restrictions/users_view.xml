@@ -27,5 +27,18 @@
                     </page>
             </field>
         </record>
+
+        <record id="view_picking_type_security_form" model="ir.ui.view">
+            <field name="name">stock.picking.type.allowed_users.form</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.view_picking_type_form"/>
+            <field name="arch" type="xml">
+
+                    <field name="default_location_dest_id" position="after">
+                        <field name="allowed_user_ids" />
+                    </field>
+
+            </field>
+        </record>
     </data>
 </openerp>
