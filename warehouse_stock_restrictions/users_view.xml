@@ -22,7 +22,10 @@
                     </group>
                     <page string="Preferences" position="after">
                         <page string="Allowed Stock Locations" attrs="{'invisible': [('restrict_locations','!=', True)]}">
+                          <h4>Stock Locations user can  Done and Cancel</h4>
                             <field name="stock_location_ids" nolabel="1" colspan="2"/>
+                          <h4>Stock Locations user can  Done and Cancel</h4>
+                               <field name="stock_cancel_location_ids" nolabel="1" colspan="2"/>
                         </page>
                     </page>
             </field>
