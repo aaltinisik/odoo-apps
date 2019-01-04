@@ -57,7 +57,7 @@ class stock_move(models.Model):
             if self.state in ['cancel']:
                 if self.location_id not in user_locations | self.env.user.stock_cancel_location_ids:
                     raise Warning(message % self.location_id.name)
-                elif self.location_dest_id not in self.env.user.stock_cancel_location_ids:
-                    raise Warning(message % user_locations |  self.location_dest_id.name)
+                elif self.location_dest_id not in user_locations | self.env.user.stock_cancel_location_ids:
+                    raise Warning(message % self.location_id.name)
 
 
