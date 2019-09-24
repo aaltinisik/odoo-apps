@@ -8,6 +8,13 @@ class ResUsers(models.Model):
 
     restrict_locations = fields.Boolean('Restrict Location')
 
+    stock_cancel_location_ids = fields.Many2many(
+        'stock.location',
+        'location_security_stock_cancel_location_users',
+        'user_id',
+        'location_id',
+        'Stock Cancel Locations')
+
     stock_location_ids = fields.Many2many(
         'stock.location',
         'location_security_stock_location_users',
@@ -42,9 +49,15 @@ class stock_move(models.Model):
                 'Invalid Location. You cannot process this move since you do '
                 'not control the location "%s". '
                 'Please contact your Adminstrator.')
-            if self.location_id not in user_locations:
-                raise Warning(message % self.location_id.name)
-            elif self.location_dest_id not in user_locations:
-                raise Warning(message % self.location_dest_id.name)
+            if self.state in ['done']:
+                if self.location_id not in user_locations:
+                    raise Warning(message % self.location_id.name)
+                elif self.location_dest_id not in user_locations:
+                    raise Warning(message % self.location_dest_id.name)
+            if self.state in ['cancel']:
+                if self.location_id not in user_locations | self.env.user.stock_cancel_location_ids:
+                    raise Warning(message % self.location_id.name)
+                elif self.location_dest_id not in user_locations | self.env.user.stock_cancel_location_ids:
+                    raise Warning(message % self.location_id.name)
 
 
